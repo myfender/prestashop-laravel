@@ -86,7 +86,7 @@ public function bar()
 
 ## Prestashop Underlying library usage
 
-You may find complete documentation and tutorials regarding Prestashop Web Service Library in the [Prestashop Documentation](http://doc.prestashop.com/display/PS17/Using+the+PrestaShop+Web+Service).
+You may find complete documentation and tutorials regarding Prestashop Web Service Library in the [Prestashop Documentation](https://devdocs.prestashop.com/1.7/webservice/).
 
 ## Helper methods
 
