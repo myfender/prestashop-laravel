@@ -63,7 +63,7 @@ class PrestashopWebServiceLibrary
         $this->key = $key;
         $this->debug = $debug;
         $this->version = 'unknown';
-        
+
         $this->runningInConsole = app()->runningInConsole();
     }
 
@@ -97,7 +97,7 @@ class PrestashopWebServiceLibrary
             throw new PrestashopWebServiceRequestException($messages[$request['status_code']], $request['status_code'], $xml);
         } else {
             $exception = 'This call to PrestaShop Web Services returned an unexpected HTTP status of: ';
-            $exception.= $request['status_code'];
+            $exception .= $request['status_code'];
             throw new PrestashopWebServiceException($exception);
         }
     }
@@ -109,11 +109,12 @@ class PrestashopWebServiceLibrary
      */
     public function isPrestashopVersionSupported($version)
     {
-        if (version_compare($version, self::PS_COMPATIBLE_VERSION_MIN, '>=') === false ||
+        if (
+            version_compare($version, self::PS_COMPATIBLE_VERSION_MIN, '>=') === false ||
             version_compare($version, self::PS_COMPATIBLE_VERSION_MAX, '<=') === false
         ) {
             $exception = 'This library is not compatible with this version of PrestaShop. ';
-            $exception.= 'Please upgrade/downgrade this library';
+            $exception .= 'Please upgrade/downgrade this library';
             throw new PrestashopWebServiceException($exception);
         }
     }
@@ -127,13 +128,18 @@ class PrestashopWebServiceLibrary
      */
     protected function executeRequest($url, $curl_params = array())
     {
+        if (strpos($url, '?') !== false) {
+            $url = $url . '&ws_key=' . $this->key;
+        } else {
+            $url = $url . '?ws_key=' . $this->key;
+        }
         $defaultParams = array(
             CURLOPT_HEADER => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLINFO_HEADER_OUT => true,
             CURLOPT_HTTPAUTH => CURLAUTH_BASIC,
-            CURLOPT_USERPWD => $this->key.':',
-            CURLOPT_HTTPHEADER => array( 'Expect:' ),
+            CURLOPT_USERPWD => $this->key . ':',
+            CURLOPT_HTTPHEADER => array('Expect:'),
             CURLOPT_SSL_VERIFYPEER => config('app.env') === 'local' ? 0 : 1,
             CURLOPT_SSL_VERIFYHOST => config('app.env') === 'local' ? 0 : 2 // value 1 is not accepted https://curl.haxx.se/libcurl/c/CURLOPT_SSL_VERIFYHOST.html
         );
@@ -156,7 +162,7 @@ class PrestashopWebServiceLibrary
 
         $status_code = $info['http_code'];
         if ($status_code === 0 || $error) {
-            throw new PrestashopWebServiceException('CURL Error: '.$error);
+            throw new PrestashopWebServiceException('CURL Error: ' . $error);
         }
 
         $index = $info['header_size'];
@@ -196,7 +202,7 @@ class PrestashopWebServiceLibrary
             'response' => $body,
             'header' => $header,
             'headers' => $headerArray
-            );
+        );
     }
 
     /**
@@ -230,14 +236,14 @@ class PrestashopWebServiceLibrary
     {
         if ($this->debug) {
             if ($this->runningInConsole) {
-                echo 'START '.$title."\n";
+                echo 'START ' . $title . "\n";
                 echo $content . "\n";
-                echo 'END '.$title."\n";
+                echo 'END ' . $title . "\n";
                 echo "\n";
             } else {
                 echo '<div style="display:table;background:#CCC;font-size:8pt;padding:7px">';
-                echo '<h6 style="font-size:9pt;margin:0">'.$title.'</h6>';
-                echo '<pre>'.htmlentities($content).'</pre>';
+                echo '<h6 style="font-size:9pt;margin:0">' . $title . '</h6>';
+                echo '<pre>' . htmlentities($content) . '</pre>';
                 echo '</div>';
             }
         }
@@ -266,7 +272,7 @@ class PrestashopWebServiceLibrary
                 libxml_clear_errors();
 
                 if (!$suppressExceptions) {
-                    throw new PrestashopWebServiceException('HTTP XML response is not parsable: '.$msg);
+                    throw new PrestashopWebServiceException('HTTP XML response is not parsable: ' . $msg);
                 }
             }
 
@@ -293,19 +299,20 @@ class PrestashopWebServiceLibrary
         $xml = '';
 
         if (isset($options['resource'], $options['postXml']) || isset($options['url'], $options['postXml'])) {
-            $url = (isset($options['resource']) ? $this->url.'/api/'.$options['resource'] : $options['url']);
+            $url = (isset($options['resource']) ? $this->url . '/api/' . $options['resource'] : $options['url']);
             $xml = $options['postXml'];
+
             if (isset($options['id_shop'])) {
-                $url .= '&id_shop='.$options['id_shop'];
+                $url .= '&id_shop=' . $options['id_shop'];
             }
             if (isset($options['id_group_shop'])) {
-                $url .= '&id_group_shop='.$options['id_group_shop'];
+                $url .= '&id_group_shop=' . $options['id_group_shop'];
             }
         } else {
             throw new PrestashopWebServiceException('Bad parameters given');
         }
         $request = $this->executeRequest($url, array(CURLOPT_CUSTOMREQUEST => 'POST', CURLOPT_POSTFIELDS => $xml));
-
+        // dump($request);
         $this->checkRequest($request);
         return $this->parseXML($request['response']);
     }
@@ -344,13 +351,13 @@ class PrestashopWebServiceLibrary
         if (isset($options['url'])) {
             $url = $options['url'];
         } elseif (isset($options['resource'])) {
-            $url = $this->url.'/api/'.$options['resource'];
+            $url = $this->url . '/api/' . $options['resource'];
             $url_params = array();
             if (isset($options['id'])) {
-                $url .= '/'.$options['id'];
+                $url .= '/' . $options['id'];
             }
 
-            $params = array('filter', 'display', 'sort', 'limit', 'id_shop', 'id_group_shop','date', 'price');
+            $params = array('filter', 'display', 'sort', 'limit', 'id_shop', 'id_group_shop', 'date', 'price');
             foreach ($params as $p) {
                 foreach ($options as $k => $o) {
                     if (strpos($k, $p) !== false) {
@@ -359,7 +366,7 @@ class PrestashopWebServiceLibrary
                 }
             }
             if (count($url_params) > 0) {
-                $url .= '?'.http_build_query($url_params);
+                $url .= '?' . http_build_query($url_params);
             }
         } else {
             throw new PrestashopWebServiceException('Bad parameters given');
@@ -367,7 +374,7 @@ class PrestashopWebServiceLibrary
 
         $request = $this->executeRequest($url, array(CURLOPT_CUSTOMREQUEST => 'GET'));
 
-        $this->checkRequest($request);// check the response validity
+        $this->checkRequest($request); // check the response validity
         return $this->parseXML($request['response']);
     }
 
@@ -383,10 +390,10 @@ class PrestashopWebServiceLibrary
         if (isset($options['url'])) {
             $url = $options['url'];
         } elseif (isset($options['resource'])) {
-            $url = $this->url.'/api/'.$options['resource'];
+            $url = $this->url . '/api/' . $options['resource'];
             $url_params = array();
             if (isset($options['id'])) {
-                $url .= '/'.$options['id'];
+                $url .= '/' . $options['id'];
             }
 
             $params = array('filter', 'display', 'sort', 'limit');
@@ -398,13 +405,13 @@ class PrestashopWebServiceLibrary
                 }
             }
             if (count($url_params) > 0) {
-                $url .= '?'.http_build_query($url_params);
+                $url .= '?' . http_build_query($url_params);
             }
         } else {
             throw new PrestashopWebServiceException('Bad parameters given');
         }
         $request = $this->executeRequest($url, array(CURLOPT_CUSTOMREQUEST => 'HEAD', CURLOPT_NOBODY => true));
-        $this->checkRequest($request);// check the response validity
+        $this->checkRequest($request); // check the response validity
         return $request['header'];
     }
 
@@ -428,21 +435,22 @@ class PrestashopWebServiceLibrary
             if (isset($options['url'])) {
                 $url = $options['url'];
             } else {
-                $url = $this->url.'/api/'.$options['resource'].'/'.$options['id'];
+                $url = $this->url . '/api/' . $options['resource'] . '/' . $options['id'];
             }
             $xml = $options['putXml'];
             if (isset($options['id_shop'])) {
-                $url .= '&id_shop='.$options['id_shop'];
+                $url .= '&id_shop=' . $options['id_shop'];
             }
             if (isset($options['id_group_shop'])) {
-                $url .= '&id_group_shop='.$options['id_group_shop'];
+                $url .= '&id_group_shop=' . $options['id_group_shop'];
             }
         } else {
             throw new PrestashopWebServiceException('Bad parameters given');
         }
 
         $request = $this->executeRequest($url, array(CURLOPT_CUSTOMREQUEST => 'PUT', CURLOPT_POSTFIELDS => $xml));
-        $this->checkRequest($request);// check the response validity
+        // dump($request);
+        $this->checkRequest($request); // check the response validity
         return $this->parseXML($request['response']);
     }
 
@@ -476,19 +484,19 @@ class PrestashopWebServiceLibrary
             $url = $options['url'];
         } elseif (isset($options['resource']) && isset($options['id'])) {
             if (is_array($options['id'])) {
-                $url = $this->url.'/api/'.$options['resource'].'/?id=['.implode(',', $options['id']).']';
+                $url = $this->url . '/api/' . $options['resource'] . '/?id=[' . implode(',', $options['id']) . ']';
             } else {
-                $url = $this->url.'/api/'.$options['resource'].'/'.$options['id'];
+                $url = $this->url . '/api/' . $options['resource'] . '/' . $options['id'];
             }
         }
         if (isset($options['id_shop'])) {
-            $url .= '&id_shop='.$options['id_shop'];
+            $url .= '&id_shop=' . $options['id_shop'];
         }
         if (isset($options['id_group_shop'])) {
-            $url .= '&id_group_shop='.$options['id_group_shop'];
+            $url .= '&id_group_shop=' . $options['id_group_shop'];
         }
         $request = $this->executeRequest($url, array(CURLOPT_CUSTOMREQUEST => 'DELETE'));
-        $this->checkRequest($request);// check the response validity
+        $this->checkRequest($request); // check the response validity
         return true;
     }
 }
