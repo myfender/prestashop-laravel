@@ -18,23 +18,14 @@
       "myfender\\PrestashopWebService\\Tests\\": "tests/"
     }
   },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://repo.packagist.com/internal/"
-    },
-    {
-      "packagist.org": false
-    }
-  ],
   "extra": {
     "laravel": {
-      "providers": [
-        "myfender\\PrestashopWebService\\PrestashopWebServiceProvider"
-      ],
-      "aliases": {
-        "Prestashop": "myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
-      }
+        "providers": [
+            "myfender\\PrestashopWebService\\PrestashopWebServiceProvider"
+        ],
+        "aliases": {
+            "Prestashop": "Myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
+        }
     }
   },
   "require-dev": {
