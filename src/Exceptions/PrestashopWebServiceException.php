@@ -1,8 +1,8 @@
 <?php
 
-namespace Myfender\PrestashopWebService\Exceptions;
+namespace myfender\PrestashopWebService\Exceptions;
 
-use Myfender\PrestashopWebService\PrestaShopWebserviceException as PSWException;
+use myfender\PrestashopWebService\PrestaShopWebserviceException as PSWException;
 
 class PrestashopWebServiceException extends PSWException
 {

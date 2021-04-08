@@ -1,6 +1,6 @@
 <?php
 
-namespace Myfender\PrestashopWebService\Tests;
+namespace myfender\PrestashopWebService\Tests;
 
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
@@ -13,7 +13,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Myfender\PrestashopWebService\PrestashopWebServiceProvider::class,
+            \myfender\PrestashopWebService\PrestashopWebServiceProvider::class,
         ];
     }
     /**
@@ -31,7 +31,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Prestashop' => \Myfender\PrestashopWebService\PrestashopWebServiceFacade::class,
+            'Prestashop' => \myfender\PrestashopWebService\PrestashopWebServiceFacade::class,
         ];
     }
 }

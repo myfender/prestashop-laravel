@@ -1,6 +1,6 @@
 <?php
 
-namespace Protechstudio\PrestashopWebService;
+namespace myfender\PrestashopWebService;
 
 use Illuminate\Support\Facades\Facade;
 

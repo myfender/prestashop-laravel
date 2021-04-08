@@ -7,25 +7,25 @@ Prestashop Web Service Library for Laravel
 Require this package with composer using the following command:
 
 ```shell
-composer require Myfender/prestashop-laravel
+composer require myfender/prestashop-laravel
 ```
 
 After updating composer, add the service provider to the `providers` array in `config/app.php`
 
 ```php
-Myfender\PrestashopWebService\PrestashopWebServiceProvider::class,
+myfender\PrestashopWebService\PrestashopWebServiceProvider::class,
 ```
 
 You may also add the Facade in the `aliases` array in `config/app.php`
 
 ```php
-'Prestashop' => Myfender\PrestashopWebService\PrestashopWebServiceFacade::class,
+'Prestashop' => myfender\PrestashopWebService\PrestashopWebServiceFacade::class,
 ```
 
 Finally publish the configuration file using the artisan command
 
 ```shell
-php artisan vendor:publish --provider="Myfender\PrestashopWebService\PrestashopWebServiceProvider"
+php artisan vendor:publish --provider="myfender\PrestashopWebService\PrestashopWebServiceProvider"
 ```
 
 ## Configuration
@@ -50,7 +50,7 @@ You may use the Prestashop Web Service wrapper in two ways:
 
 ```php
 ...
-use Myfender\PrestashopWebService\PrestashopWebService;
+use myfender\PrestashopWebService\PrestashopWebService;
 
 class FooController extends Controller
 {

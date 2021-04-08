@@ -1,11 +1,11 @@
 <?php
 
-namespace Myfender\PrestashopWebService\Tests;
+namespace myfender\PrestashopWebService\Tests;
 
-use Myfender\PrestashopWebService\PrestashopWebService;
-use Myfender\PrestashopWebService\Exceptions\PrestashopWebServiceException;
-use Myfender\PrestashopWebService\Exceptions\PrestashopWebServiceRequestException;
-use Myfender\PrestashopWebService\PrestashopWebServiceLibrary;
+use myfender\PrestashopWebService\PrestashopWebService;
+use myfender\PrestashopWebService\Exceptions\PrestashopWebServiceException;
+use myfender\PrestashopWebService\Exceptions\PrestashopWebServiceRequestException;
+use myfender\PrestashopWebService\PrestashopWebServiceLibrary;
 use Prestashop;
 
 class PrestashopWebServiceTest extends TestCase

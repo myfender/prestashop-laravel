@@ -1,9 +1,9 @@
 <?php
 
-namespace Myfender\PrestashopWebService;
+namespace myfender\PrestashopWebService;
 
-use Myfender\PrestashopWebService\Exceptions\PrestashopWebServiceException;
-use Myfender\PrestashopWebService\Exceptions\PrestashopWebServiceRequestException;
+use myfender\PrestashopWebService\Exceptions\PrestashopWebServiceException;
+use myfender\PrestashopWebService\Exceptions\PrestashopWebServiceRequestException;
 use SimpleXMLElement;
 
 /**

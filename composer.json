@@ -10,21 +10,21 @@
   ],
   "autoload": {
     "psr-4": {
-      "Myfender\\PrestashopWebService\\": "src/"
+      "myfender\\PrestashopWebService\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Myfender\\PrestashopWebService\\Tests\\": "tests/"
+      "myfender\\PrestashopWebService\\Tests\\": "tests/"
     }
   },
   "extra": {
     "laravel": {
         "providers": [
-            "Myfender\\PrestashopWebService\\PrestashopWebServiceProvider"
+            "myfender\\PrestashopWebService\\PrestashopWebServiceProvider"
         ],
         "aliases": {
-            "Prestashop": "Myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
+            "Prestashop": "myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
         }
     }
   },

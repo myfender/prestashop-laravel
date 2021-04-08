@@ -1,6 +1,6 @@
 <?php
 
-namespace Myfender\PrestashopWebService;
+namespace myfender\PrestashopWebService;
 
 class PrestaShopWebserviceException extends \Exception
 {
