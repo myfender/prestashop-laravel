@@ -24,7 +24,7 @@
             "myfender\\PrestashopWebService\\PrestashopWebServiceProvider"
         ],
         "aliases": {
-            "Prestashop": "Myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
+            "Prestashop": "myfender\\PrestashopWebService\\PrestashopWebServiceFacade"
         }
     }
   },
